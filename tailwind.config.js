@@ -3,10 +3,16 @@ module.exports = {
     // removeDeprecatedGapUtilities: true,
     // purgeLayersByDefault: true,
   },
-  purge: [],
+  purge:
+    process.env.NODE_ENV === "production"
+      ? {
+          mode: "all",
+          content: ["./src/**/*.tsx"],
+        }
+      : false,
   theme: {
     extend: {},
   },
   variants: {},
   plugins: [],
-}
+};
