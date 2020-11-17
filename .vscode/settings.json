@@ -1,0 +1,5 @@
+{
+  "stylelint.enable": true,
+  "scss.validate": false,
+  "editor.formatOnSave": true
+}
