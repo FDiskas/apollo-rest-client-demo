@@ -1,41 +1,115 @@
-# TypeScript Next.js example
+## Apollo react state
 
-This is a really simple project that shows the usage of Next.js with TypeScript.
+### Create boilerplate
 
-## Deploy your own
+1. `yarn create next-app --example with-typescript .`
+1. `git init`
+1. `yarn add @apollo/client`
+1. `yarn dev` 🌟 check if it works
 
-Deploy the example using [Vercel](https://vercel.com):
+### Add tools
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/with-typescript)
+1. `npm i -g mrm` https://mrm.js.org
+1. `mrm editorconfig -i`
+1. `mrm eslint`
+1. `mrm prettier -i`
+1. `yarn add -D eslint-plugin-prettier` https://github.com/prettier/eslint-plugin-prettier
+1. `mrm license -i`
+1. `mrm stylelint`
+1. Change vscode settings - format on save
 
-## How to use it?
+### Add styles
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+1. `yarn add -D sass`
+1. `yarn add tailwindcss -D`
+1. create file `postcss.config.js`
+1. `yarn add postcss-preset-env -D`
 
-```bash
-npx create-next-app --example with-typescript with-typescript-app
-# or
-yarn create next-app --example with-typescript with-typescript-app
+   ```
+   module.exports = {
+       plugins: ['tailwindcss', 'postcss-preset-env'],
+   }
+   ```
+
+1. Install vscode plugin https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss
+1. Edit `.stylelintrc`
+
+   ```
+     "rules": {
+       "at-rule-no-unknown": [
+         true,
+         {
+           "ignoreAtRules": [
+             "tailwind",
+             "apply",
+             "responsive",
+             "variants",
+             "screen"
+           ]
+         }
+       ]
+     }
+   ```
+
+1. Create VSCode settings file `.vscode/settings.json`
+   ```
+   {
+     "stylelint.enable": true,
+     "scss.validate": false,
+     "editor.formatOnSave": true
+   }
+   ```
+1. initialize TailWind `yarn tailwind init`
+
+   ```
+   module.exports = {
+     ...
+     purge:
+       process.env.NODE_ENV === "production"
+         ? {
+             mode: "all",
+             content: ["./src/**/*.tsx"],
+           }
+         : false,
+     ...
+   };
+   ```
+
+1. Restart IDE
+
+### reorganize folder structure
+
+1. Move to `src` dir
+   - pages
+   - components
+   - interfaces
+   - utils
+1. Create global style `src/styles/main.scss`
+
+   ```
+   /* purgecss start ignore */
+   @tailwind base;
+   @tailwind screens;
+   @tailwind components;
+
+   /* purgecss end ignore */
+
+   @tailwind utilities;
+   ```
+
+1. create file `src/pages/_app.tsx`
+
+   ```
+   import { AppProps } from "next/dist/next-server/lib/router/router";
+   import "../styles/main.scss";
+
+   export default function MyApp({ Component, pageProps }: AppProps) {
+     return <Component {...pageProps} />;
+   }
+   ```
+
+To check if it works try add to `<nav>` element thous classes
+
 ```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-## Notes
-
-This example shows how to integrate the TypeScript type system into Next.js. Since TypeScript is supported out of the box with Next.js, all we have to do is to install TypeScript.
-
+className="fixed z-50 w-full bg-white top-0 flex flex-wrap items-center gap-2 px-2 py-3 shadow-lg"
 ```
-npm install --save-dev typescript
-```
-
-To enable TypeScript's features, we install the type declarations for React and Node.
-
-```
-npm install --save-dev @types/react @types/react-dom @types/node
-```
-
-When we run `next dev` the next time, Next.js will start looking for any `.ts` or `.tsx` files in our project and builds it. It even automatically creates a `tsconfig.json` file for our project with the recommended settings.
-
-Next.js has built-in TypeScript declarations, so we'll get autocompletion for Next.js' modules straight away.
-
-A `type-check` script is also added to `package.json`, which runs TypeScript's `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include this, for example, in your `test` scripts.
