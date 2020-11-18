@@ -1,15 +1,17 @@
 {
   "extends": "eslint:recommended",
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "prettier",
-    "@typescript-eslint/eslint-plugin"
-  ],
+  "plugins": ["prettier", "@typescript-eslint/eslint-plugin"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
     "project": "./tsconfig.json"
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
   },
   "rules": {
     "prettier/prettier": "error"

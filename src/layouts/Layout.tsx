@@ -19,15 +19,19 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => (
       <nav className="fixed z-50 w-full bg-white top-0 flex flex-wrap items-center gap-2 px-2 py-3 shadow-lg">
         <Link href="/">
           <a>Home</a>
-        </Link>{' '}
-        |{' '}
+        </Link>
+        |
+        <Link href="/posts">
+          <a>Posts</a>
+        </Link>
+        |
         <Link href="/about">
           <a>About</a>
-        </Link>{' '}
-        |{' '}
+        </Link>
+        |
         <Link href="/users">
           <a>Users List</a>
-        </Link>{' '}
+        </Link>
         | <a href="/api/users">Users API</a>
       </nav>
     </header>
