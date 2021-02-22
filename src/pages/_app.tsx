@@ -1,5 +1,5 @@
 import { ApolloProvider } from '@apollo/client';
-import { AppProps } from 'next/dist/next-server/lib/router/router';
+import { AppProps } from 'next/app';
 import { apolloClient } from '../gql/client';
 import '../styles/main.scss';
 
